@@ -1,7 +1,7 @@
 # Mug Exchange
 
 <p align="center">
-<img src="./images/thisismyteam.png" width="50%">
+<img src="./images/Team 10.jpg" width="50%">
 </p>
 <p align="center">
 Making coffee sustainable one mug at a time
