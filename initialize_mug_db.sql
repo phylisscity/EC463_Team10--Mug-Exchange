@@ -1,0 +1,3 @@
+CREATE TABLE orders (id INT PRIMARY KEY, external_id INT UNIQUE, user_id INT, FOREIGN KEY (user_id) REFERENCES users(id), location_id INT, FOREIGN KEY (location_id) REFERENCES locations(id), mug_id INT, FOREIGN KEY (mug_id) REFERENCES mugs(rfid), order_status ENUM('pending', 'fulfilled', 'cancelled'), created_at TIMESTAMP, updated_at TIMESTAMP);
+
+CREATE TABLE mugs (id INT PRIMARY KEY, rfid INT UNIQUE, mug_status ENUM('available', 'in-use', 'maintenance') NOT NULL DEFAULT 'returned', current_user_id INT, FOREIGN KEY (current_user_id) REFERENCES users(id), lease_expiration TIMESTAMP, last_event_id INT, FOREIGN KEY (last_event_id) REFERENCES events(id));
