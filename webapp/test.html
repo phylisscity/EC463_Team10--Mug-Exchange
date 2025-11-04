@@ -3,117 +3,98 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Mug Exchange</title>
+<title>Mug Exchange – Test</title>
 <style>
 :root{
   --bg:#f5f7fb; --text:#0f172a; --muted:#64748b;
   --border:#e2e8f0; --card:#fff;
   --green:#16a34a; --green-dark:#166534; --green-b:#15803d;
   --red:#ef4444; --red-dark:#991b1b; --red-bg:#fee2e2;
+  --blue:#0ea5e9; --blue-bg:#e0f2fe;
 }
 *{box-sizing:border-box}
 html,body{margin:0;padding:0;font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bg)}
 button{font:inherit;cursor:pointer}
 a{text-decoration:none;color:inherit}
 :focus-visible{outline:2px solid #16a34a66; outline-offset:2px}
-
 .app{max-width:420px;margin:0 auto;min-height:100dvh;display:flex;flex-direction:column}
 .content{padding:16px 16px 92px}
 .hidden{display:none!important}
-
-/* Login hero image */
-#view-login .logo img{width:350px;height:auto;margin-bottom:50px;transform:translateX(17px);pointer-events:none}
-
-/* Dashboard card */
-#view-dashboard .card{
-  background:var(--card);border:1px solid var(--border);border-radius:16px;
-  box-shadow:0 2px 8px rgba(0,0,0,.06);width:340px;min-height:460px;
-  padding:32px 28px 40px;display:flex;flex-direction:column;align-items:center;gap:16px
-}
-#view-dashboard .h1{margin:0}
-#view-dashboard .logo{margin:8px 0 10px}
-#view-dashboard .logo img{width:350px;height:auto;transform:translateX(17px);pointer-events:none}
-#view-dashboard .btn-grid{margin-top:4px;gap:16px;width:100%;max-width:260px}
-#view-dashboard .btn{width:100%;text-align:center}
-
-/* Centering utility */
-.center-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
-
-/* Bottom nav */
-.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:8px;width:min(420px,100%);
-  background:#fff;border:1px solid var(--border);border-radius:16px;padding:8px 10px;display:flex;justify-content:space-around;gap:6px;box-shadow:0 6px 22px rgba(0,0,0,.08)}
-.nav a{padding:8px 12px;border-radius:10px}
-.nav a.active{background:#16a34a1a;color:var(--green-dark);border:1px solid var(--green)}
-
-/* UI atoms */
 .h1{font-weight:800;font-size:1.25rem;margin:8px 0}
 .h2{font-weight:700;font-size:1.05rem;margin:0 0 4px}
 .meta{color:var(--muted);font-size:.9rem}
 .input{width:100%;padding:12px;border:1px solid var(--border);border-radius:10px;font-size:16px;background:#fff}
 .btn{padding:12px 14px;border-radius:12px;border:1px solid var(--green-b);background:var(--green);color:#fff;font-weight:600;display:inline-block;text-align:center}
+.btn.secondary{background:#fff;color:var(--text);border-color:var(--border)}
 .row{display:flex;align-items:center;gap:12px}
 .stack{display:grid;gap:12px}
-.card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:16px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.nav{position:fixed;left:50%;transform:translateX(-50%);bottom:8px;width:min(420px,100%);background:#fff;border:1px solid var(--border);border-radius:16px;padding:8px 10px;display:flex;justify-content:space-around;gap:6px;box-shadow:0 6px 22px rgba(0,0,0,.08)}
+.nav a{padding:8px 12px;border-radius:10px}
+.nav a.active{background:#16a34a1a;color:var(--green-dark);border:1px solid var(--green)}
+.center-screen{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
 
-/* List rows */
-.list{display:grid;gap:12px}
-.item{display:flex;align-items:center;gap:12px}
-.item-body{flex:1;min-width:0}
+/* Hero image only on login/dashboard */
+#view-login .logo img, #view-dashboard .logo img{
+  width: 220px; height:auto; display:block; margin:0 auto 12px; pointer-events:none; transform:translateX(14px);
+}
+.logo{display:flex;align-items:center;justify-content:center}
+
+/* Thumbnail for list rows */
 .thumb{width:44px;height:44px;border-radius:8px;flex:0 0 44px;object-fit:contain}
 
-/* Pills */
-.pill{white-space:nowrap;font-size:.85rem;padding:6px 10px;border-radius:999px;border:1px solid var(--green);color:var(--green-dark);background:#16a34a1a}
-.overdue-pill{border-color:var(--red);color:var(--red-dark);background:var(--red-bg)}
-.overdue-text{color:var(--red-dark);font-weight:600;font-size:.9rem}
-
-/* Map mock */
-.map{
-  height:260px;border-radius:12px;border:1px solid var(--border);
-  background:
-    linear-gradient(0deg,var(--border) 1px,transparent 1px) 0 0/36px 36px,
-    linear-gradient(90deg,var(--border) 1px,transparent 1px) 0 0/36px 36px,
-    #c8e3ff;
-  position:relative;overflow:hidden
-}
-.pin{position:absolute;width:18px;height:18px;border-radius:50%;background:var(--red);border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.25);cursor:pointer}
-.pin.green{background:var(--green)}
-
-/* Login layout */
-.login-hero{display:grid;justify-items:center;margin-top:18px}
-.login-hero .logo{width:120px;height:120px}
-.login-hero .logo img{width:200px;height:auto}
-
-/* Dashboard 2-up + 1 layout */
-.btn-grid{margin:0 auto;max-width:320px;display:grid;grid-template-columns:1fr 1fr;gap:12px}
-.btn-grid .full{grid-column:1 / -1}
+/* Dashboard layout */
+#view-dashboard .card{padding:20px 20px 24px;display:flex;flex-direction:column;gap:14px;align-items:center}
+.hero-wrap{display:grid;justify-items:center;gap:8px}
 
 /* Status banner */
-.status-banner{width:100%;border:1px solid var(--border);background:#fff;border-radius:12px;padding:12px 14px;text-align:left}
+.status-banner{width:100%;border:1px solid var(--border);background:#fff;border-radius:12px;padding:12px 14px}
 .status-banner .title{font-weight:700;margin-bottom:4px}
-.status-none{color:var(--muted)}
 .status-good{color:var(--green-dark)}
+.status-none{color:var(--muted)}
 .status-bad{color:var(--red-dark)}
+
+/* Buttons layout */
+.btn-grid{width:100%;display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.btn-grid .full{grid-column:1/-1}
+
+/* Test panel */
+.test-controls{width:100%;background:var(--blue-bg);border:1px solid #bfdbfe;border-radius:12px;padding:10px;display:grid;gap:8px}
+
+/* Lists */
+.list{display:grid;gap:12px}
+.item{display:flex;align-items:center;gap:12px}
+.item .card{min-height:88px;display:flex;align-items:center}
+.item-body{flex:1;min-width:0}
+.pill{white-space:nowrap;font-size:.85rem;padding:6px 10px;border-radius:999px;border:1px solid var(--green);color:var(--green-dark);background:#16a34a1a}
+.overdue-pill{border-color:var(--red); color:var(--red-dark); background:var(--red-bg)}
+.overdue-text{color:var(--red-dark); font-weight:600; font-size:.9rem}
+
+/* Map mock */
+.map{height:260px;border-radius:12px;border:1px solid var(--border);
+  background:linear-gradient(0deg,var(--border) 1px,transparent 1px) 0 0/36px 36px,
+             linear-gradient(90deg,var(--border) 1px,transparent 1px) 0 0/36px 36px,#c8e3ff;
+  position:relative; overflow:hidden}
+.pin{position:absolute;width:18px;height:18px;border-radius:50%;background:var(--red);border:2px solid #fff;box-shadow:0 1px 2px rgba(0,0,0,.25);cursor:pointer}
+.pin.green{background:var(--green)}
 </style>
 </head>
 <body>
 <div class="app">
-
-  <!-- LOGIN -->
+  <!-- LOGIN is visible first -->
   <main id="view-login" class="content center-screen">
-    <div class="login-hero" aria-hidden="true">
-      <div class="logo"><img src="mug.png" alt="Mug Exchange Logo"></div>
-      <h1 class="h1">Mug Exchange</h1>
-      <div class="stack" style="width:100%;max-width:320px">
-        <input id="login-username" class="input" placeholder="Email or Username" autocomplete="off" value="">
-        <button id="login-btn" class="btn">Log In</button>
-        <p id="login-err" class="meta" style="color:#dc2626;display:none">Invalid login. Try <b>demo</b>.</p>
-      </div>
+    <div class="logo"><img src="mug.png" alt="Mug"></div>
+    <h1 class="h1">Mug Exchange</h1>
+    <div class="stack" style="width:100%;max-width:320px">
+      <input id="login-username" class="input" placeholder="Email or Username" value="demo">
+      <button id="login-btn" class="btn">Log In</button>
+      <p id="login-err" class="meta" style="color:#dc2626;display:none">Invalid login. Try <b>demo</b>.</p>
     </div>
   </main>
 
-  <!-- DASHBOARD -->
+  <!-- DASHBOARD starts hidden -->
   <main id="view-dashboard" class="content center-screen hidden">
-    <div class="card center">
+    <div class="card">
       <h2 class="h1" id="welcome">Welcome Back!</h2>
 
       <div id="status" class="status-banner">
@@ -121,21 +102,24 @@ a{text-decoration:none;color:inherit}
         <div id="status-text" class="status-none">No active mug. Place an order to get started.</div>
       </div>
 
-      <div class="row" style="justify-content:center">
-        <div class="logo" style="width:96px;height:96px">
-          <img src="mug.png" alt="Mug Exchange Logo">
-        </div>
+      <div class="hero-wrap">
+        <div class="logo"><img src="mug.png" alt="Mug"></div>
       </div>
 
       <div class="btn-grid">
-        <a class="btn" data-nav="order">Order</a>
-        <a class="btn" data-nav="past">Past Orders</a>
-        <a class="btn full" data-nav="map">Map</a>
+        <button class="btn" data-nav="order">Order</button>
+        <button class="btn" data-nav="past">Past Orders</button>
+        <button class="btn full" data-nav="map">Map</button>
+      </div>
+
+      <div class="test-controls">
+        <div class="meta"><strong>Test Controls</strong> — simulate checkout & return without a backend.</div>
+        <button id="test-assign" class="btn" style="background:var(--blue);border-color:#0284c7">Simulate Assignment</button>
+        <button id="test-return" class="btn secondary">Simulate Return</button>
       </div>
     </div>
   </main>
 
-  <!-- ORDER -->
   <main id="view-order" class="content hidden">
     <h1 class="h1">Order from a Partnered Café</h1>
     <input id="order-q" class="input" placeholder="Search by name or location…">
@@ -143,7 +127,6 @@ a{text-decoration:none;color:inherit}
     <div id="order-list" class="list"></div>
   </main>
 
-  <!-- MAP -->
   <main id="view-map" class="content hidden">
     <h1 class="h1">Find a Partnered Cafe</h1>
     <input id="map-q" class="input" placeholder="Search…" style="margin:6px 0 12px 0">
@@ -156,13 +139,11 @@ a{text-decoration:none;color:inherit}
     <div id="map-list" class="stack" style="margin-top:12px"></div>
   </main>
 
-  <!-- PAST -->
   <main id="view-past" class="content hidden">
     <h1 class="h1">Past Orders</h1>
     <div id="past-list" class="list"></div>
   </main>
 
-  <!-- NAV -->
   <nav class="nav" id="nav">
     <a data-nav="login">Login</a>
     <a data-nav="dashboard">Home</a>
@@ -173,7 +154,6 @@ a{text-decoration:none;color:inherit}
 </div>
 
 <script>
-/* Demo data */
 const cafes = [
   { id:'gsu-starbucks', name:'Starbucks @ GSU', area:'Boston University', dist:'0.1 mi', mugs:14, url:'https://www.starbucks.com' },
   { id:'pavement', name:'Pavement Coffeehouse', area:'Commonwealth Ave', dist:'0.3 mi', mugs:8, url:'https://pavementcoffeehouse.com' },
@@ -182,15 +162,12 @@ const cafes = [
 ];
 
 let orders = [
-  {id:101, cafe:cafes[0].name, item:'Latte',        ordered:'2025-10-02T09:41:00', returned:'2025-10-02T15:05:00'},
+  {id:101, cafe:cafes[0].name, item:'Latte', ordered:'2025-10-02T09:41:00', returned:'2025-10-02T15:05:00'},
   {id:102, cafe:cafes[1].name, item:'Black Coffee', ordered:'2025-10-01T08:25:00', returned:'2025-10-01T12:18:00'},
-  {id:103, cafe:cafes[2].name, item:'Cold Brew',    ordered:'2025-09-30T10:04:00', returned:null}
+  {id:103, cafe:cafes[2].name, item:'Cold Brew', ordered:'2025-09-30T10:04:00', returned:null}
 ];
 
-/* State */
 const state = { user:null, activeMug:null };
-
-/* Helpers */
 const $ = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const byId = id => document.getElementById(id);
@@ -256,77 +233,51 @@ function renderStatus(){
   el.innerHTML = `Checked out <b>${s.item}</b> at <b>${s.cafe}</b> • Mug ID <b>${s.id}</b><br>Due by <b>${dueStr}</b>`;
 }
 
-/* Public hooks for backend events */
-function onMugAssigned({ id, cafe, item, orderedISO, dueISO }){
-  state.activeMug = { id, cafe, item, orderedISO, dueISO };
-  renderStatus();
-}
-function recordReturn({ cafe, item, orderedISO }){
-  orders = [
-    {
-      id: Math.floor(Math.random()*100000),
-      cafe, item,
-      ordered: orderedISO,
-      returned: new Date().toISOString()
-    },
-    ...orders
-  ];
-  renderPast();
-}
-function onMugReturned(){
-  if(!state.activeMug) return;
-  const s = state.activeMug;
-  recordReturn({ cafe: s.cafe, item: s.item, orderedISO: s.orderedISO });
-  state.activeMug = null;
-  renderStatus();
-}
-
-/* Optional console helpers for local testing (no UI controls) */
-window.demoAssign = function(){
+/* Test controls */
+function simulateAssign(){
   const pick = cafes[0];
   const now = new Date();
   const due = new Date(now); due.setDate(due.getDate()+3);
-  onMugAssigned({
-    id: 'MUG-'+Math.floor(Math.random()*9000+1000),
-    cafe: pick.name, item: 'Latte',
-    orderedISO: now.toISOString(),
-    dueISO: due.toISOString()
-  });
-};
-window.demoReturn = function(){ onMugReturned(); };
+  state.activeMug = { id:'MUG-'+Math.floor(Math.random()*9000+1000), cafe:pick.name, item:'Latte', orderedISO:now.toISOString(), dueISO:due.toISOString() };
+  renderStatus();
+}
+function simulateReturn(){
+  if(!state.activeMug) return;
+  const s = state.activeMug;
+  orders = [{ id:Math.floor(Math.random()*100000), cafe:s.cafe, item:s.item, ordered:s.orderedISO, returned:new Date().toISOString() }, ...orders];
+  state.activeMug = null;
+  renderStatus();
+  renderPast();
+}
 
 /* SPA nav */
 const views = ['login','dashboard','order','map','past'];
 function setActiveTab(view){ $$('.nav a').forEach(a=>a.classList.toggle('active', a.dataset.nav===view)); }
 function show(view){
-  if(view!=='login' && !state.user){ view = 'login'; }
   views.forEach(v=>byId('view-'+v).classList.toggle('hidden', v!==view));
   byId('nav').style.display = (view==='login') ? 'none' : 'flex';
-
   if(view==='order') renderOrderList(byId('order-q').value||'');
   if(view==='map')   byId('map-list').innerHTML = cafes.map(cafeRow).join('');
   if(view==='past')  renderPast();
-
   setActiveTab(view);
   window.scrollTo(0,0);
 }
 
 /* Events */
-byId('login-btn').addEventListener('click', ()=>{
+byId('login-btn').addEventListener('click',()=>{
   const val = (byId('login-username').value||'').trim().toLowerCase();
   const err = byId('login-err');
   if(val==='demo'){
-    state.user = 'Demo';
+    state.user='Demo';
     err.style.display='none';
-    byId('welcome').textContent = `Welcome Back, ${state.user}!`;
+    byId('welcome').textContent=`Welcome Back, ${state.user}!`;
     show('dashboard');
     renderStatus();
   }else{
     err.style.display='block';
   }
 });
-$$('[data-nav]').forEach(el=>el.addEventListener('click', ()=>show(el.dataset.nav)));
-
+$$('[data-nav]').forEach(el=>el.addEventListener('click',()=>show(el.dataset.nav)));
 byId('order-q').addEventListener('input', e=>renderOrderList(e.target.value));
 byId('map-q').addEventListener('input', e=>{
   const needle = e.target.value.toLowerCase();
@@ -341,8 +292,10 @@ $$('.pin').forEach(pin=>{
     byId('map-list').innerHTML = [c].map(cafeRow).join('');
   });
 });
+byId('test-assign')?.addEventListener('click', simulateAssign);
+byId('test-return')?.addEventListener('click', simulateReturn);
 
-/* Start on login */
+/* Start on LOGIN */
 show('login');
 renderPast();
 </script>
