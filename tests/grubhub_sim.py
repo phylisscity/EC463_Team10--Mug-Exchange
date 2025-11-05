@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify
-from datetime import datetime
+from datetime import datetime, timedelta
 import threading
 import time
 
@@ -24,6 +24,7 @@ def generate_mock_orders():
     order_counter = 1001
     time_counter = "2025-10-30T00:00:05Z"
 
+    time.sleep(10)
     while True:
         time.sleep(5)
 
@@ -42,7 +43,9 @@ def generate_mock_orders():
         MOCK_ORDERS.append(new_order)
         print(f"[+] Added mock order: {new_order}")
         order_counter += 1
-        #time_counter =
+        
+        new_time = datetime.strptime(time_counter, "%Y-%m-%dT%H:%M:%SZ") + timedelta(seconds = 5)
+        time_counter = new_time.strftime("%Y-%m-%dT%H:%M:%SZ")
 
 @app.route("/pos/orders", methods=["GET"])
 def get_orders():
@@ -64,3 +67,8 @@ def get_orders():
     return jsonify({
         "orders": filtered_orders
     })
+
+if __name__ == "__main__":
+    threading.thread(target=generate_mock_orders, daemon=True).start()
+
+    app.run(host="localhost", port = 5000, debug=True)
