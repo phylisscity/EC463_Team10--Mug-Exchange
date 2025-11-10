@@ -5,27 +5,47 @@ import requests
 WEBHOOK_URL = "http://localhost:3000/api/grubhub/webhook"
 
 # Mock data to simulate "orders" from Grubhub
-MOCK_ORDERS = []
+MOCK_ORDERS = [
+    {
+    "orderId": "1001",
+    "merchantName": "Starbucks",
+    "status": "IN_PROGRESS",
+    "orderTime": "2025-10-30T00:00:05Z",
+    "MugExchange": "Yes" 
+    },
+    {
+    "orderId": "1001",
+    "merchantName": "Starbucks",
+    "status": "IN_PROGRESS",
+    "orderTime": "2025-10-30T00:00:05Z",
+    "MugExchange": "Yes" 
+    },
+    {
+    "orderId": "1001",
+    "merchantName": "Starbucks",
+    "status": "IN_PROGRESS",
+    "orderTime": "2025-10-30T00:00:05Z",
+    "MugExchange": "Yes" 
+    },
+]
+
 merchant_list = ["Starbucks", "Pavement", "Saxby's"]
+is_mug_exchange = ["Yes", "No"]
 
 def generate_mock_orders():
     order_counter = 1001
     time_counter = "2025-10-30T00:00:05Z"
 
     #time.sleep(10)
-    while True:
-        time.sleep(5)
+    while len(MOCK_ORDERS) < 10:
+        time.sleep(3)
 
         new_order = {
             "orderId": str(order_counter),
             "merchantName": "Starbucks",
             "status": "IN_PROGRESS",
-            "orderDate": time_counter,
-            "items": [
-            {"name": "Burger", "quantity": 2, "price": 9.99},
-            {"name": "Fries", "quantity": 1, "price": 3.49}
-            ],
-        "total": 23.47
+            "orderTime": time_counter,
+            "MugExchange": "Yes" 
         }
 
         MOCK_ORDERS.append(new_order)

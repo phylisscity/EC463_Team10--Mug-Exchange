@@ -29,7 +29,7 @@ app.post('/api/grubhub/webhook', (req, res) => {
 
     MOCK_ORDERS.push(req.body);
 
-    io.emit("Order update", req.body);
+    io.emit("orderUpdate", req.body);
 
     res.status(200).json({message: "Webhook received"})
 });

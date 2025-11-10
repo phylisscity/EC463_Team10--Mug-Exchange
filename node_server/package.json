@@ -4,5 +4,6 @@
     "http": "^0.0.1-security",
     "mysql2": "^3.15.2",
     "socket.io": "^4.8.1"
-  }
+  },
+  "type": "module"
 }
