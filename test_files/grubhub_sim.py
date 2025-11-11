@@ -1,10 +1,9 @@
-from datetime import datetime, timedelta
 import time
 import requests
 
 WEBHOOK_URL = "http://10.239.162.7:3000/api/grubhub/webhook"
-TIME_IN_BETWEEN = 2
-SERVER_URL = "http://10.239.162.7:3000"
+TIME_IN_BETWEEN = 3
+SERVER_URL = "http://10.240.219.208:3000"
 
 MOCK_ORDERS = [
     {"orderId": "1001", "merchantName": "Saxbys", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:05Z", "MugExchange": "No"},
