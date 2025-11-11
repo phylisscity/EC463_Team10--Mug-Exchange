@@ -27,9 +27,10 @@ io.on('connection', (socket) => {
 app.post('/api/grubhub/webhook', (req, res) => {
     console.log("Webhook received", req.body);
 
+    if(req.body.MugExchange == "Yes") {
     MOCK_ORDERS.push(req.body);
-
     io.emit("orderUpdate", req.body);
+    }
 
     res.status(200).json({message: "Webhook received"})
 });
