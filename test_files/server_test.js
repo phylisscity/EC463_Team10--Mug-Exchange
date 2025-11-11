@@ -58,6 +58,6 @@ app.get('/', (req, res) => {
     res.send("Mug Exchange server!");
 });
 
-server.listen(PORT, () => {
-    console.log(`Server running at http://localhost:${PORT}`);
+server.listen(PORT, "10.239.162.7", () => {
+    console.log(`Server running at http://10.239.162.7:${PORT}`);
 });
