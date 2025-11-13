@@ -162,7 +162,7 @@ a { text-decoration:none; color:inherit }
   gap:16px;
 }
 #view-login .logo img {
-  width:360px;      /* large but centered */
+  width:360px;
   height:auto;
   margin:0 auto 16px;
   display:block;
@@ -301,6 +301,9 @@ a { text-decoration:none; color:inherit }
   </nav>
 </div>
 
+<!-- socket.io client (must match server version ≥4) -->
+<script src="https://cdn.socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
+
 <script>
 /* Demo data */
 const cafes = [
@@ -325,6 +328,76 @@ const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const byId = id => document.getElementById(id);
 
+/* ===== socket.io integration with Amado's server ===== */
+const SOCKET_URL = "http://localhost:3000"; // adjust if server runs elsewhere
+let socket = null;
+
+function setupSocket() {
+  try {
+    socket = io(SOCKET_URL, {
+      transports: ['websocket'],   // prefer websocket
+      reconnection: true,
+      reconnectionDelay: 1000,
+      reconnectionDelayMax: 5000
+    });
+
+    socket.on('connect', () => {
+      console.log('[socket] connected:', socket.id);
+    });
+
+    socket.on('disconnect', () => {
+      console.log('[socket] disconnected');
+    });
+
+    // This must match io.emit("orderUpdate", payload) in server.js
+    socket.on('orderUpdate', (payload) => {
+      console.log('[socket] orderUpdate received:', payload);
+
+      // Example expected fields (adjust to match actual payload):
+      // payload = {
+      //   MugExchange: "Yes",
+      //   status: "ASSIGNED" | "RETURNED",
+      //   mugId: "MUG-1234",
+      //   cafe: "Pavement Coffeehouse",
+      //   item: "Latte",
+      //   orderedISO: "...",
+      //   dueISO: "..."
+      // }
+
+      if (payload.MugExchange !== "Yes") {
+        // ignore non-mug-exchange orders
+        return;
+      }
+
+      const status = (payload.status || '').toUpperCase();
+
+      if (status === 'ASSIGNED') {
+        // new mug checkout → update banner + active mug
+        onMugAssigned({
+          id: payload.mugId || 'MUG-UNKNOWN',
+          cafe: payload.cafe || 'Partner Café',
+          item: payload.item || 'Drink',
+          orderedISO: payload.orderedISO || new Date().toISOString(),
+          dueISO: payload.dueISO || new Date(Date.now()+3*24*60*60*1000).toISOString()
+        });
+      } else if (status === 'RETURNED') {
+        // mug returned → move to Past Orders
+        onMugReturned();
+      } else {
+        console.log('[socket] orderUpdate with unhandled status:', status);
+      }
+    });
+
+    socket.on('connect_error', (err) => {
+      console.warn('[socket] connect_error', err.message);
+    });
+
+  } catch (e) {
+    console.warn('[socket] setup error', e);
+  }
+}
+
+/* ===== helpers ===== */
 function fmtDate(s){
   const d = new Date(s);
   return d.toLocaleString([], {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
@@ -395,11 +468,12 @@ function renderStatus(){
     `Checked out <b>${s.item}</b> at <b>${s.cafe}</b> • Mug ID <b>${s.id}</b><br>Due by <b>${dueStr}</b>`;
 }
 
-/* Hooks used by tests / future backend */
+/* ===== hooks used by socket.io + tests ===== */
 function onMugAssigned({ id, cafe, item, orderedISO, dueISO }){
   state.activeMug = { id, cafe, item, orderedISO, dueISO };
   renderStatus();
 }
+
 function recordReturn({ cafe, item, orderedISO }){
   orders = [
     {
@@ -413,6 +487,7 @@ function recordReturn({ cafe, item, orderedISO }){
   ];
   renderPast();
 }
+
 function onMugReturned(){
   if(!state.activeMug) return;
   const s = state.activeMug;
@@ -421,7 +496,7 @@ function onMugReturned(){
   renderStatus();
 }
 
-/* Exposed demo helpers (for manual + automated component tests) */
+/* Manual testing helpers (keep for debugging) */
 window.demoAssign = function(){
   const pick = cafes[0];
   const now = new Date();
@@ -439,7 +514,7 @@ window.demoReturn = function(){
   onMugReturned();
 };
 
-/* SPA Navigation */
+/* ===== SPA Navigation ===== */
 const views = ['login','dashboard','order','map','past'];
 
 function setActiveTab(view){
@@ -510,31 +585,10 @@ $$('.pin').forEach(pin => {
   });
 });
 
-let lastReturnTsSeen = null;
-
-async function pollMockReturn(){
-  try {
-    const res = await fetch('/mock-return-status');
-    if (!res.ok) return;
-    const data = await res.json();
-
-    // If server reports a new return event, process it once
-    if (data.ts && data.ts !== lastReturnTsSeen) {
-      lastReturnTsSeen = data.ts;
-      onMugReturned();
-      console.log("[Frontend] Detected mock return event at", data.ts);
-    }
-  } catch (e) {
-    // Ignore network errors during demo
-  }
-}
-
-// Poll every 500 ms while app is open
-setInterval(pollMockReturn, 500);
-
-/* Start on login */
-show('login');
-renderPast();
+/* ===== Start app ===== */
+setupSocket();      // connect to Node.js server
+show('login');      // initial view
+renderPast();       // render seeded history
 </script>
 </body>
 </html>

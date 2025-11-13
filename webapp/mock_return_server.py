@@ -23,13 +23,13 @@ def ping():
 
 @app.route("/")
 def serve_app():
-    path = os.path.join(BASE_DIR, "mugexchange.html")
+    path = os.path.join(BASE_DIR, "test.html")
     if os.path.exists(path):
-        log("[SERVER] / -> serving mugexchange.html")
-        return send_from_directory(BASE_DIR, "mugexchange.html")
+        log("[SERVER] / -> serving test.html")
+        return send_from_directory(BASE_DIR, "test.html")
     else:
-        log("[SERVER] / -> mugexchange.html NOT FOUND")
-        return "<h1>mugexchange.html not found</h1>", 404
+        log("[SERVER] / -> test.html NOT FOUND")
+        return "<h1>test.html not found</h1>", 404
 
 @app.route("/mock-return", methods=["POST"])
 def mock_return():
