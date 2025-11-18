@@ -1,26 +1,27 @@
 import time
 import requests
 
-WEBHOOK_URL = "http://10.239.162.7:3000/api/grubhub/webhook"
 TIME_IN_BETWEEN = 1
-SERVER_URL = "http://10.240.219.101:3000"
+SERVER_URL = "http://localhost:3000"
 
 MOCK_ORDERS = [
-    {"orderId": "1001", "merchantName": "Saxbys", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:05Z", "MugExchange": "Yes"},
-    {"orderId": "1002", "merchantName": "Pavement", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:10Z", "MugExchange": "Yes"},
-    {"orderId": "1003", "merchantName": "Starbucks", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:15Z", "MugExchange": "Yes"},
-    {"orderId": "1004", "merchantName": "Saxbys", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:20Z", "MugExchange": "Yes"},
-    {"orderId": "1005", "merchantName": "Starbucks", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:25Z", "MugExchange": "Yes"},
-    {"orderId": "1006", "merchantName": "Pavement", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:30Z", "MugExchange": "Yes"},
-    {"orderId": "1007", "merchantName": "Starbucks", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:35Z", "MugExchange": "Yes"},
-    {"orderId": "1008", "merchantName": "Saxbys", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:40Z", "MugExchange": "Yes"},
-    {"orderId": "1009", "merchantName": "Pavement", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:45Z", "MugExchange": "Yes"},
-    {"orderId": "1010", "merchantName": "Starbucks", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:50Z", "MugExchange": "Yes"},
-    {"orderId": "1011", "merchantName": "Pavement", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:00:55Z", "MugExchange": "Yes"},
-    {"orderId": "1012", "merchantName": "Starbucks", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:01:00Z", "MugExchange": "Yes"},
-    {"orderId": "1013", "merchantName": "Saxbys", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:01:05Z", "MugExchange": "Yes"},
-    {"orderId": "1014", "merchantName": "Pavement", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:01:10Z", "MugExchange": "Yes"},
-    {"orderId": "1015", "merchantName": "Starbucks", "status": "IN_PROGRESS", "orderTime": "2025-10-30T00:01:15Z", "MugExchange": "Yes"}
+    {"mugId": "1001", "merchantName": "Saxbys", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:05Z", "MugExchange": "Yes"},
+    {"mugId": "1002", "merchantName": "Pavement", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:10Z", "MugExchange": "Yes"},
+    {"mugId": "1003", "merchantName": "Starbucks", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:15Z", "MugExchange": "Yes"},
+    {"mugId": "1004", "merchantName": "Saxbys", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:20Z", "MugExchange": "Yes"},
+    {"mugId": "1005", "merchantName": "Starbucks", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:25Z", "MugExchange": "Yes"},
+    {"mugId": "1006", "merchantName": "Pavement", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:30Z", "MugExchange": "Yes"},
+    {"mugId": "1007", "merchantName": "Starbucks", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:35Z", "MugExchange": "Yes"},
+    {"mugId": "1008", "merchantName": "Saxbys", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:40Z", "MugExchange": "Yes"},
+    {"mugId": "1005", "merchantName": "Starbucks", "status": "READY_PICKUP", "orderTime": "2025-10-30T00:00:25Z", "MugExchange": "Yes"},
+    {"mugId": "1009", "merchantName": "Pavement", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:45Z", "MugExchange": "Yes"},
+    {"mugId": "1007", "merchantName": "Starbucks", "status": "READY_PICKUP", "orderTime": "2025-10-30T00:00:35Z", "MugExchange": "Yes"},
+    {"mugId": "1010", "merchantName": "Starbucks", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:50Z", "MugExchange": "Yes"},
+    {"mugId": "1011", "merchantName": "Pavement", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:00:55Z", "MugExchange": "Yes"},
+    {"mugId": "1012", "merchantName": "Starbucks", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:01:00Z", "MugExchange": "Yes"},
+    {"mugId": "1013", "merchantName": "Saxbys", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:01:05Z", "MugExchange": "Yes"},
+    {"mugId": "1014", "merchantName": "Pavement", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:01:10Z", "MugExchange": "Yes"},
+    {"mugId": "1015", "merchantName": "Starbucks", "status": "ORDER_SUBMITTED", "orderTime": "2025-10-30T00:01:15Z", "MugExchange": "Yes"}
 ]
 
 def generate_mock_orders(time_between_orders):

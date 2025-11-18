@@ -3,6 +3,7 @@ import http from "http";
 import { Server } from "socket.io";
 
 const app = express();
+const IP_ADDRESS = "192.168.221.43";
 const PORT = 3000;
 
 let MOCK_ORDERS = [];
@@ -54,10 +55,15 @@ app.post('/api/grubhub/webhook', (req, res) => {
     res.status(200).json({message: "Webhook received"})
 });
 
+app.post('/return', (req, res) => {
+    console.log("Return bin endpoint hit: ", req.body);
+    res.status(200).json({message: "RFID received"});
+});
+
 app.get('/', (req, res) => {
     res.send("Mug Exchange server!");
 });
 
-server.listen(PORT, "10.239.162.7", () => {
-    console.log(`Server running at http://10.239.162.7:${PORT}`);
+server.listen(PORT, IP_ADDRESS, () => {
+    console.log(`Server running at http://${IP_ADDRESS}:${PORT}`);
 });
