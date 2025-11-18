@@ -305,6 +305,7 @@ a { text-decoration:none; color:inherit }
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
 
 <script>
+  const MUG_SRC = 'Assets/mug.png';
 /* Demo data */
 const cafes = [
   { id:'gsu-starbucks', name:'Starbucks @ GSU', area:'Boston University', dist:'0.1 mi', mugs:14, url:'https://www.starbucks.com' },
@@ -413,7 +414,7 @@ function daysOverdue(orderedISO, days=3){
 function cafeRow(c){
   return `
     <div class="card item">
-      <img class="thumb" src="Assets/mug.png" alt="">
+      <img class="thumb" src="${MUG_SRC}" alt="">
       <div class="item-body">
         <div class="h2">${c.name}</div>
         <div class="meta">${c.area} • ${c.dist} • ${c.mugs} mugs</div>
@@ -440,7 +441,7 @@ function historyRow(o){
     : ` • Returned: ${fmtDate(o.returned)}`;
   return `
     <div class="card item">
-      <img class="thumb" src="Assets/mug.png" alt="">
+      <img class="thumb" src="${MUG_SRC}" alt="">
       <div class="item-body">
         <div class="h2">${o.item} — ${o.cafe}</div>
         <div class="meta">Ordered: ${fmtDate(o.ordered)}${extra}</div>
