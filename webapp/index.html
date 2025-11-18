@@ -330,7 +330,8 @@ const $$ = s => [...document.querySelectorAll(s)];
 const byId = id => document.getElementById(id);
 
 /* ===== socket.io integration with Amado's server ===== */
-const SOCKET_URL = "http://localhost:3000"; // adjust if server runs elsewhere
+const IP_ADDRESS = "192.168.221.43"; // adjust if needed
+const SOCKET_URL = `http://${IP_ADDRESS}:3000`;
 let socket = null;
 
 function setupSocket() {
@@ -372,14 +373,14 @@ function setupSocket() {
 
       const status = (payload.status || '').toUpperCase();
 
-      if (status === 'ASSIGNED') {
+      if (status === 'READY_PICKUP') {
         // new mug checkout → update banner + active mug
         onMugAssigned({
           id: payload.mugId || 'MUG-UNKNOWN',
           cafe: payload.cafe || 'Partner Café',
-          item: payload.item || 'Drink',
-          orderedISO: payload.orderedISO || new Date().toISOString(),
-          dueISO: payload.dueISO || new Date(Date.now()+3*24*60*60*1000).toISOString()
+          item: payload.Item || 'Drink',
+          orderedISO: payload.orderTime || new Date().toISOString(),
+          dueISO: new Date(Date.now()+3*24*60*60*1000).toISOString()
         });
       } else if (status === 'RETURNED') {
         // mug returned → move to Past Orders
@@ -593,3 +594,4 @@ renderPast();       // render seeded history
 </script>
 </body>
 </html>
+
