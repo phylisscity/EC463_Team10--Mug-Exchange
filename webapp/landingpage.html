@@ -1,0 +1,599 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Mug Exchange – Reusable Mug System for Cafés</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta
+    name="description"
+    content="Mug Exchange lets café customers order online and still get a reusable mug—no need to bring their own cup or wash it themselves."
+  />
+  <style>
+    :root {
+      --bg: #f5f7fb;
+      --bg-alt: #ffffff;
+      --text: #0f172a;
+      --muted: #64748b;
+      --accent: #16a34a;
+      --accent-soft: #dcfce7;
+      --border: #e2e8f0;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: var(--bg);
+      color: var(--text);
+    }
+
+    body {
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 16px 16px 48px;
+    }
+
+    header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 0 16px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 700;
+      font-size: 1.05rem;
+    }
+
+    .brand-logo-img {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      object-fit: contain;
+    }
+
+    nav {
+      display: flex;
+      gap: 16px;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    nav a:hover {
+      color: var(--text);
+    }
+
+    main {
+      display: flex;
+      flex-direction: column;
+      gap: 48px;
+    }
+
+    /* Hero */
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+      gap: 24px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.0rem, 4vw, 2.6rem);
+      margin: 0 0 12px;
+      letter-spacing: -0.02em;
+    }
+
+    .hero-text p {
+      margin: 0 0 16px;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.5;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: var(--accent);
+      font-size: 0.75rem;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 8px;
+    }
+
+    .btn-primary {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--accent);
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 0.9rem;
+    }
+
+    .btn-outline {
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--border);
+      background: #fff;
+      color: var(--text);
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+
+    .hero-visual {
+      background: var(--bg-alt);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      padding: 18px 18px 14px;
+      box-shadow: 0 8px 25px rgba(15, 23, 42, 0.06);
+      font-size: 0.9rem;
+      display: grid;
+      gap: 8px;
+    }
+
+    .hero-visual-title {
+      font-weight: 600;
+      margin-bottom: 4px;
+    }
+
+    .hero-visual-row {
+      display: flex;
+      justify-content: space-between;
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    .hero-visual-label {
+      opacity: 0.9;
+    }
+
+    .hero-visual-value {
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    section {
+      border-radius: 16px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      padding: 18px 18px 14px;
+    }
+
+    section h2 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    section p {
+      margin: 0 0 10px;
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+      gap: 18px;
+    }
+
+    ul {
+      margin: 4px 0 0 18px;
+      padding: 0;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    li + li {
+      margin-top: 4px;
+    }
+
+    .badge-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 6px;
+    }
+
+    .badge {
+      font-size: 0.75rem;
+      padding: 4px 8px;
+      border-radius: 999px;
+      background: #f1f5f9;
+      color: var(--muted);
+    }
+
+    .faq-item {
+      margin-bottom: 10px;
+    }
+
+    .faq-q {
+      font-weight: 600;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+
+    .faq-a {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin: 0;
+    }
+
+    footer {
+      margin-top: auto;
+      border-top: 1px solid var(--border);
+      padding: 12px 16px 20px;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    footer .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    footer a {
+      text-decoration: underline;
+      text-decoration-thickness: 1px;
+      text-underline-offset: 3px;
+    }
+
+    @media (max-width: 720px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .two-col {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 8px;
+      }
+      nav {
+        font-size: 0.85rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="brand">
+        <img src="assets/mug.png" alt="Mug Exchange Logo" class="brand-logo-img">
+        <span>Mug Exchange</span>
+      </div>
+      <nav>
+        <a href="#problem">Problem</a>
+        <a href="#solution">Our solution</a>
+        <a href="#how">How it works</a>
+        <a href="#tech">Tech</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+      </nav>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-text">
+          <div class="pill">
+            Reusable mugs for online orders
+          </div>
+          <h1>Order online. Pick up in a reusable mug. No BYO cup required.</h1>
+          <p>
+            Today, most reusable cup programs only work if customers order in
+            person and bring their own cup. Mug Exchange lets cafés keep online
+            ordering and pickup, while still handing drinks out in reusable
+            mugs that customers can return later.
+          </p>
+          <div class="hero-actions">
+            <a href="#contact" class="btn-primary">
+              Contact the Mug Exchange team
+            </a>
+            <a href="#how" class="btn-outline">
+              See how it works
+            </a>
+          </div>
+        </div>
+
+        <div class="hero-visual" aria-label="System overview">
+          <div class="hero-visual-title">How it feels for customers</div>
+          <div class="hero-visual-row">
+            <span class="hero-visual-label">Step 1</span>
+            <span class="hero-visual-value">Order online like usual</span>
+          </div>
+          <div class="hero-visual-row">
+            <span class="hero-visual-label">Step 2</span>
+            <span class="hero-visual-value">Pick up in a Mug Exchange mug</span>
+          </div>
+          <div class="hero-visual-row">
+            <span class="hero-visual-label">Step 3</span>
+            <span class="hero-visual-value">Return later to any partner bin</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- PROBLEM -->
+      <section id="problem">
+        <h2>The problem we’re addressing</h2>
+        <p>
+          Cafés and coffee shops are under pressure to reduce single-use cup
+          waste. But most existing reusable options ask customers to
+          <strong>bring their own cup, order in person, and clean the cup at home</strong>.
+        </p>
+        <p>
+          That means customers lose the convenience of mobile ordering and pickup,
+          and staff have to explain a separate “reusable” process at the counter.
+          As a result, reusable programs stay niche and don’t meaningfully replace
+          single-use cups.
+        </p>
+        <div class="badge-row">
+          <span class="badge">BYO cup only works for a few customers</span>
+          <span class="badge">Mobile and web orders stuck with disposables</span>
+          <span class="badge">Customers don’t want extra cleanup work</span>
+        </div>
+      </section>
+
+      <!-- OUR SOLUTION -->
+      <section id="solution" class="two-col">
+        <div>
+          <h2>Our solution: Mug Exchange</h2>
+          <p>
+            Mug Exchange makes reusable mugs work with online ordering. Customers
+            place their drink order through the café’s normal digital flow (e.g.
+            food ordering system), choose the Mug Exchange option, and pick up
+            their drink in a café-owned reusable mug—no personal cup required.
+          </p>
+          <ul>
+            <li>
+              <strong>Order online:</strong> Customer checks out as usual, with a
+              “Mug Exchange” option instead of a disposable cup.
+            </li>
+            <li>
+              <strong>Pickup:</strong> The barista scans the order and scans an
+              RFID-tagged Mug Exchange mug, linking that mug to the order.
+            </li>
+            <li>
+              <strong>Return:</strong> The customer drops the mug in a smart
+              return bin later. The system marks it as returned and back in
+              circulation.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2>Why this is different</h2>
+          <p>
+            Instead of asking customers to bring and wash their own cups, Mug
+            Exchange uses café-owned mugs that are tracked and washed by the
+            operator. The customer experience stays simple:
+          </p>
+          <ul>
+            <li>
+              No need to carry a cup around all day—just choose Mug Exchange at
+              checkout.
+            </li>
+            <li>
+              Online and in-app orders can finally use reusables, not just
+              in-person orders.
+            </li>
+            <li>
+              Returning is as easy as dropping the mug into a bin on the way out.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- HOW IT WORKS -->
+      <section id="how">
+        <h2>How it works (end-to-end)</h2>
+        <p>
+          The Mug Exchange flow is designed to sit alongside your existing digital
+          ordering and café operations.
+        </p>
+        <ul>
+          <li>
+            <strong>1. Customer places an order online</strong><br>
+            The customer uses your existing ordering channel (web, app, or
+            kiosk). At checkout, they see a “Mug Exchange” option instead of a
+            disposable cup.
+          </li>
+          <li>
+            <strong>2. Order appears at the café</strong><br>
+            Your ordering system sends the new order to our backend. The drink
+            is prepared as usual by baristas.
+          </li>
+          <li>
+            <strong>3. Mug is assigned at the counter</strong><br>
+            At pickup, the barista scans the order chit and then scans an
+            RFID-tagged Mug Exchange mug. This links that specific mug ID to
+            the customer’s order in our database.
+          </li>
+          <li>
+            <strong>4. Customer leaves with a reusable mug</strong><br>
+            The customer takes the drink in the Mug Exchange mug instead of a
+            disposable cup. The mug is now marked as “checked out” in the system.
+          </li>
+          <li>
+            <strong>5. Mug is returned to a smart bin</strong><br>
+            When the customer is done, they drop the mug into a return bin with
+            an RFID reader. The system records the return and frees that mug to
+            be washed and reused.
+          </li>
+          <li>
+            <strong>6. Customer can track their activity</strong><br>
+            A companion web experience (our prototype SPA) shows the customer
+            their active mug, due time, and history of past Mug Exchange orders.
+          </li>
+        </ul>
+      </section>
+
+      <!-- TECH OVERVIEW -->
+      <section id="tech" class="two-col">
+        <div>
+          <h2>Technical overview</h2>
+          <p>
+            Under the hood, Mug Exchange is a small full-stack system:
+          </p>
+          <ul>
+            <li>
+              <strong>Frontend:</strong> A mobile-first single-page web app that
+              shows mug status, a history of orders, and participating cafés.
+            </li>
+            <li>
+              <strong>Backend:</strong> A Node.js server and database that store
+              mug assignments, returns, and customer/link information.
+            </li>
+            <li>
+              <strong>Hardware:</strong> RFID readers at a counter station and a
+              return bin connect physical mugs to digital orders.
+            </li>
+          </ul>
+        </div>
+        <div>
+          <h2>Current status</h2>
+          <p>
+            This is an in-progress prototype built by students as part of a
+            senior design project. We are using campus cafés as an initial test
+            environment to validate the concept before applying it more broadly
+            to cafés and coffee shops.
+          </p>
+          <ul>
+            <li>Prototype web app and backend are under development.</li>
+            <li>Hardware integration with RFID readers is in progress.</li>
+            <li>
+              Future goal: integrate with a real food ordering API (e.g. Grubhub)
+              so online orders can be tracked end-to-end with Mug Exchange.
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section id="faq">
+        <h2>FAQ</h2>
+
+        <div class="faq-item">
+          <p class="faq-q">Does Mug Exchange replace our existing ordering system?</p>
+          <p class="faq-a">
+            No. The goal is to sit alongside your current ordering flow. Orders
+            are still placed through your existing web/app experience. Mug
+            Exchange adds a reusable mug option and connects mug assignment and
+            returns to those orders.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Who is responsible for washing the mugs?</p>
+          <p class="faq-a">
+            The café remains responsible for washing and sanitizing the mugs
+            according to its existing dishwashing processes. Mug Exchange only
+            tracks which mugs are out, which have been returned, and when.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What kind of API integration is required?</p>
+          <p class="faq-a">
+            In the full version, we expect to receive order identifiers and
+            status updates from your ordering platform via API or webhooks.
+            When a customer selects the Mug Exchange option, that choice is
+            passed to our backend so we can link a mug ID to that order and
+            update it when the mug is returned.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">What data do you store about customers?</p>
+          <p class="faq-a">
+            In the prototype, we only store basic identifiers needed to link
+            orders to mugs (for example, a user ID from the ordering system).
+            The focus is on tracking mug circulation, not detailed customer
+            profiles.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Where are you testing this?</p>
+          <p class="faq-a">
+            We are currently designing Mug Exchange as a student project and
+            using campus cafés as an initial test environment. The concept is
+            intended for cafés and coffee shops more broadly once validated.
+          </p>
+        </div>
+
+        <div class="faq-item">
+          <p class="faq-q">Is this a live production service?</p>
+          <p class="faq-a">
+            Not yet. This is a prototype and research project. The purpose of
+            this page is to describe the concept, system design, and our plans
+            for integration with real ordering platforms.
+          </p>
+        </div>
+      </section>
+
+      <!-- CONTACT -->
+      <section id="contact">
+        <h2>Contact</h2>
+        <p>
+          Mug Exchange is a student project exploring how cafés can move away
+          from single-use cups without giving up the convenience of online
+          ordering and quick pickup. We’re happy to share design details,
+          technical documentation, or a prototype demo.
+        </p>
+        <ul>
+          <li>
+            <strong>Email:</strong>
+            <a href="mailto:example@bu.edu">example@bu.edu</a>
+            <!-- TODO: replace with your actual contact email -->
+          </li>
+        </ul>
+      </section>
+    </main>
+  </div>
+
+  <footer>
+    <div class="footer-inner">
+      <span>© 2025 Mug Exchange – Senior Design student project</span>
+      <span>
+        This site describes the Mug Exchange prototype. It is not a live
+        production service.
+      </span>
+    </div>
+  </footer>
+</body>
+</html>
