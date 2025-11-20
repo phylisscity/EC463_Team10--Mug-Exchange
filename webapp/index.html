@@ -5,219 +5,147 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Mug Exchange</title>
 <style>
-:root {
+:root{
   --bg:#f5f7fb; --text:#0f172a; --muted:#64748b;
   --border:#e2e8f0; --card:#fff;
   --green:#16a34a; --green-dark:#166534; --green-b:#15803d;
   --red:#ef4444; --red-dark:#991b1b; --red-bg:#fee2e2;
 }
-* { box-sizing:border-box }
-html,body {
-  margin:0; padding:0;
+*{box-sizing:border-box}
+html,body{
+  margin:0;padding:0;
   font-family:-apple-system,system-ui,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
-  color:var(--text); background:var(--bg);
+  color:var(--text);background:var(--bg)
 }
-button { font:inherit; cursor:pointer }
-a { text-decoration:none; color:inherit }
-:focus-visible { outline:2px solid #16a34a66; outline-offset:2px }
+button{font:inherit;cursor:pointer}
+a{text-decoration:none;color:inherit}
+:focus-visible{outline:2px solid #16a34a66; outline-offset:2px}
 
-.app {
-  max-width:420px;
-  margin:0 auto;
-  min-height:100dvh;
-  display:flex;
-  flex-direction:column;
+.app{
+  max-width:420px;margin:0 auto;min-height:100dvh;
+  display:flex;flex-direction:column
 }
-.content { padding:16px 16px 92px }
-.hidden { display:none!important }
+.content{padding:16px 16px 92px}
+.hidden{display:none!important}
 
 /* Centering utility */
-.center-screen {
-  min-height:100vh;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  text-align:center;
+.center-screen{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center
 }
 
 /* Bottom nav */
-.nav {
-  position:fixed;
-  left:50%;
-  transform:translateX(-50%);
-  bottom:8px;
-  width:min(420px,100%);
-  background:#fff;
-  border:1px solid var(--border);
-  border-radius:16px;
-  padding:8px 10px;
-  display:flex;
-  justify-content:space-around;
-  gap:6px;
-  box-shadow:0 6px 22px rgba(0,0,0,.08);
+.nav{
+  position:fixed;left:50%;transform:translateX(-50%);
+  bottom:8px;width:min(420px,100%);
+  background:#fff;border:1px solid var(--border);
+  border-radius:16px;padding:8px 10px;
+  display:flex;justify-content:space-around;gap:6px;
+  box-shadow:0 6px 22px rgba(0,0,0,.08)
 }
-.nav a {
-  padding:8px 12px;
-  border-radius:10px;
-}
-.nav a.active {
-  background:#16a34a1a;
-  color:var(--green-dark);
-  border:1px solid var(--green);
+.nav a{padding:8px 12px;border-radius:10px}
+.nav a.active{
+  background:#16a34a1a;color:var(--green-dark);border:1px solid var(--green)
 }
 
 /* UI atoms */
-.h1 { font-weight:800; font-size:1.25rem; margin:8px 0 }
-.h2 { font-weight:700; font-size:1.05rem; margin:0 0 4px }
-.meta { color:var(--muted); font-size:.9rem }
-.input {
-  width:100%;
-  padding:12px;
-  border:1px solid var(--border);
-  border-radius:10px;
-  font-size:16px;
-  background:#fff;
+.h1{font-weight:800;font-size:1.25rem;margin:8px 0}
+.h2{font-weight:700;font-size:1.05rem;margin:0 0 4px}
+.meta{color:var(--muted);font-size:.9rem}
+.input{
+  width:100%;padding:12px;border:1px solid var(--border);
+  border-radius:10px;font-size:16px;background:#fff
 }
-.btn {
-  padding:12px 14px;
-  border-radius:12px;
+.btn{
+  padding:12px 14px;border-radius:12px;
   border:1px solid var(--green-b);
-  background:var(--green);
-  color:#fff;
-  font-weight:600;
-  display:inline-block;
-  text-align:center;
+  background:var(--green);color:#fff;
+  font-weight:600;display:inline-block;text-align:center
 }
-.row { display:flex; align-items:center; gap:12px }
-.stack { display:grid; gap:12px }
-.card {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:12px;
-  padding:12px;
-  box-shadow:0 1px 2px rgba(0,0,0,.03);
+.row{display:flex;align-items:center;gap:12px}
+.stack{display:grid;gap:12px}
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:12px;padding:12px;
+  box-shadow:0 1px 2px rgba(0,0,0,.03)
 }
 
 /* List rows */
-.list { display:grid; gap:12px }
-.item { display:flex; align-items:center; gap:12px }
-.item-body { flex:1; min-width:0 }
-.thumb {
-  width:44px;
-  height:44px;
-  border-radius:8px;
-  flex:0 0 44px;
-  object-fit:contain;
+.list{display:grid;gap:12px}
+.item{display:flex;align-items:center;gap:12px}
+.item-body{flex:1;min-width:0}
+.thumb{
+  width:44px;height:44px;border-radius:8px;
+  flex:0 0 44px;object-fit:contain
 }
 
 /* Pills */
-.pill {
-  white-space:nowrap;
-  font-size:.85rem;
-  padding:6px 10px;
-  border-radius:999px;
+.pill{
+  white-space:nowrap;font-size:.85rem;
+  padding:6px 10px;border-radius:999px;
   border:1px solid var(--green);
-  color:var(--green-dark);
-  background:#16a34a1a;
+  color:var(--green-dark);background:#16a34a1a
 }
-.overdue-pill {
-  border-color:var(--red);
-  color:var(--red-dark);
-  background:var(--red-bg);
+.overdue-pill{
+  border-color:var(--red);color:var(--red-dark);background:var(--red-bg)
 }
-.overdue-text {
-  color:var(--red-dark);
-  font-weight:600;
-  font-size:.9rem;
+.overdue-text{
+  color:var(--red-dark);font-weight:600;font-size:.9rem
 }
 
 /* Map mock */
-.map {
-  height:260px;
-  border-radius:12px;
-  border:1px solid var(--border);
+.map{
+  height:260px;border-radius:12px;border:1px solid var(--border);
   background:
     linear-gradient(0deg,var(--border) 1px,transparent 1px) 0 0/36px 36px,
     linear-gradient(90deg,var(--border) 1px,transparent 1px) 0 0/36px 36px,
     #c8e3ff;
-  position:relative;
-  overflow:hidden;
+  position:relative;overflow:hidden
 }
-.pin {
-  position:absolute;
-  width:18px; height:18px;
-  border-radius:50%;
-  background:var(--red);
-  border:2px solid #fff;
-  box-shadow:0 1px 2px rgba(0,0,0,.25);
-  cursor:pointer;
+.pin{
+  position:absolute;width:18px;height:18px;border-radius:50%;
+  background:var(--red);border:2px solid #fff;
+  box-shadow:0 1px 2px rgba(0,0,0,.25);cursor:pointer
 }
-.pin.green { background:var(--green) }
+.pin.green{background:var(--green)}
 
 /* Login layout & hero image */
-.login-hero {
-  display:grid;
-  justify-items:center;
-  gap:16px;
-}
-#view-login .logo img {
-  width:360px;
-  height:auto;
-  margin:0 auto 16px;
-  display:block;
-  pointer-events:none;
+.login-hero{display:grid;justify-items:center;gap:16px}
+#view-login .logo img{
+  width:360px;height:auto;margin:0 auto 16px;
+  display:block;pointer-events:none
 }
 
 /* Dashboard card & hero image */
-#view-dashboard .card {
-  background:var(--card);
-  border:1px solid var(--border);
-  border-radius:16px;
+#view-dashboard .card{
+  background:var(--card);border:1px solid var(--border);border-radius:16px;
   box-shadow:0 2px 8px rgba(0,0,0,.06);
-  width:340px;
-  min-height:460px;
+  width:340px;min-height:460px;
   padding:24px 20px 32px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  gap:16px;
+  display:flex;flex-direction:column;align-items:center;gap:16px
 }
-#view-dashboard .h1 { margin:0 }
-#view-dashboard .logo img {
-  width:360px;
-  height:auto;
-  margin:0 auto;
-  display:block;
-  pointer-events:none;
+#view-dashboard .h1{margin:0}
+#view-dashboard .logo img{
+  width:360px;height:auto;margin:0 auto;display:block;pointer-events:none
 }
 
 /* Dashboard 2-up + 1 layout */
-.btn-grid {
-  margin:0 auto;
-  max-width:320px;
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:12px;
+.btn-grid{
+  margin:0 auto;max-width:320px;
+  display:grid;grid-template-columns:1fr 1fr;gap:12px
 }
-.btn-grid .full { grid-column:1 / -1 }
+.btn-grid .full{grid-column:1 / -1}
 
 /* Status banner */
-.status-banner {
-  width:100%;
-  border:1px solid var(--border);
-  background:#fff;
-  border-radius:12px;
-  padding:12px 14px;
-  text-align:left;
+.status-banner{
+  width:100%;border:1px solid var(--border);
+  background:#fff;border-radius:12px;
+  padding:12px 14px;text-align:left
 }
-.status-banner .title {
-  font-weight:700;
-  margin-bottom:4px;
-}
-.status-none { color:var(--muted) }
-.status-good { color:var(--green-dark) }
-.status-bad  { color:var(--red-dark) }
+.status-banner .title{font-weight:700;margin-bottom:4px}
+.status-none{color:var(--muted)}
+.status-good{color:var(--green-dark)}
+.status-bad{color:var(--red-dark)}
 </style>
 </head>
 <body>
@@ -291,8 +219,8 @@ a { text-decoration:none; color:inherit }
     <div id="past-list" class="list"></div>
   </main>
 
-  <!-- NAV -->
-  <nav class="nav" id="nav">
+  <!-- NAV (hidden on login) -->
+  <nav class="nav" id="nav" style="display:none">
     <a data-nav="login">Login</a>
     <a data-nav="dashboard">Home</a>
     <a data-nav="order">Order</a>
@@ -301,43 +229,70 @@ a { text-decoration:none; color:inherit }
   </nav>
 </div>
 
-<!-- socket.io client (must match server version ≥4) -->
+<!-- socket.io client -->
 <script src="https://cdn.socket.io/4.7.5/socket.io.min.js" crossorigin="anonymous"></script>
 
 <script>
-  const MUG_SRC = 'Assets/mug.png';
-/* Demo data */
-const cafes = [
-  { id:'gsu-starbucks', name:'Starbucks @ GSU', area:'Boston University', dist:'0.1 mi', mugs:14, url:'https://www.starbucks.com' },
-  { id:'pavement',      name:'Pavement Coffeehouse', area:'Commonwealth Ave', dist:'0.3 mi', mugs:8, url:'https://pavementcoffeehouse.com' },
-  { id:'bluebottle',    name:'Blue Bottle — Kenmore', area:'Kenmore', dist:'0.7 mi', mugs:0, url:'https://bluebottlecoffee.com' },
-  { id:'cfa',           name:'CFA Café', area:'College of Fine Arts', dist:'0.4 mi', mugs:5, url:'https://www.bu.edu/cfa' }
+const MUG_SRC = 'Assets/mug.png';
+
+/* Seed demo orders – all live in the same array as real ones */
+let orders = [
+  {
+    orderId: 'SEED-101',
+    mugId:   'MUG-101',
+    cafe:    'Starbucks @ GSU',
+    item:    'Latte',
+    ordered: '2025-10-02T09:41:00',
+    returned:'2025-10-02T15:05:00',
+    status:  'RETURNED'
+  },
+  {
+    orderId: 'SEED-102',
+    mugId:   'MUG-102',
+    cafe:    'Pavement Coffeehouse',
+    item:    'Black Coffee',
+    ordered: '2025-10-01T08:25:00',
+    returned:'2025-10-01T12:18:00',
+    status:  'RETURNED'
+  },
+  {
+    orderId: 'SEED-103',
+    mugId:   'MUG-103',
+    cafe:    'Blue Bottle — Kenmore',
+    item:    'Cold Brew',
+    ordered: '2025-09-30T10:04:00',
+    returned:null,
+    status:  'OVERDUE'
+  }
 ];
 
-let orders = [
-  {id:101, cafe:cafes[0].name, item:'Latte',        ordered:'2025-10-02T09:41:00', returned:'2025-10-02T15:05:00'},
-  {id:102, cafe:cafes[1].name, item:'Black Coffee', ordered:'2025-10-01T08:25:00', returned:'2025-10-01T12:18:00'},
-  {id:103, cafe:cafes[2].name, item:'Cold Brew',    ordered:'2025-09-30T10:04:00', returned:null}
+const cafes = [
+  { id:'gsu-starbucks', name:'Starbucks @ GSU',       area:'Boston University',  dist:'0.1 mi', mugs:14, url:'https://www.starbucks.com' },
+  { id:'pavement',      name:'Pavement Coffeehouse',  area:'Commonwealth Ave',   dist:'0.3 mi', mugs:8,  url:'https://pavementcoffeehouse.com' },
+  { id:'bluebottle',    name:'Blue Bottle — Kenmore', area:'Kenmore',            dist:'0.7 mi', mugs:0,  url:'https://bluebottlecoffee.com' },
+  { id:'cfa',           name:'CFA Café',              area:'College of Fine Arts', dist:'0.4 mi', mugs:5, url:'https://www.bu.edu/cfa' }
 ];
 
 const state = {
   user: null,
-  activeMug: null
+  activeMugs: {},           // orderId -> order object
+  lastActiveOrderId: null   // for default return
 };
 
 const $  = s => document.querySelector(s);
 const $$ = s => [...document.querySelectorAll(s)];
 const byId = id => document.getElementById(id);
 
-/* ===== socket.io integration with Amado's server ===== */
-const IP_ADDRESS = "192.168.221.43" 
-const SOCKET_URL = `http://${IP_ADDRESS}:3000`; // adjust if server runs elsewhere
-let socket = null;
+/* ========= socket.io integration with Amado's server ========= */
+/*  (unchanged shape; just passes orderId into our handlers)      */
+const IP_ADDRESS  = "192.168.221.43";
+const SOCKET_URL  = `http://${IP_ADDRESS}:3000`;
+let   socket      = null;
 
-function setupSocket() {
-  try {
+function setupSocket(){
+  try{
     socket = io(SOCKET_URL, {
-      transports: ['websocket'],   // prefer websocket
+      transports: ['websocket'],
       reconnection: true,
       reconnectionDelay: 1000,
       reconnectionDelayMax: 5000
@@ -351,64 +306,57 @@ function setupSocket() {
       console.log('[socket] disconnected');
     });
 
-    // This must match io.emit("orderUpdate", payload) in server.js
+    // Must match io.emit("orderUpdate", payload) in server.js
     socket.on('orderUpdate', (payload) => {
       console.log('[socket] orderUpdate received:', payload);
 
-      // Example expected fields (adjust to match actual payload):
-      // payload = {
-      //   MugExchange: "Yes",
-      //   status: "ASSIGNED" | "RETURNED",
-      //   mugId: "MUG-1234",
-      //   cafe: "Pavement Coffeehouse",
-      //   item: "Latte",
-      //   orderedISO: "...",
-      //   dueISO: "..."
-      // }
-      console.log('Order recieved');
-      const status = payload.status;
-      if (status === 'READY_PICKUP') {
-        // new mug checkout → update banner + active mug
+      const status  = payload.status;
+      const orderId = payload.orderId || 'default';
+
+      if(status === 'READY_PICKUP'){
         console.log('Order is ready for pickup');
         onMugAssigned({
-          id: payload.mugId || 'MUG-UNKNOWN',
-          cafe: payload.merchant_name || 'Partner Café',
-          item: payload.Item || 'Drink',
+          orderId,
+          id:         payload.mugId || 'MUG-UNKNOWN',
+          cafe:       payload.merchant_name || 'Partner Café',
+          item:       payload.Item || 'Drink',
           orderedISO: payload.orderTime || new Date().toISOString(),
-          dueISO: new Date(Date.now()+3*24*60*60*1000).toISOString()
+          dueISO:     new Date(Date.now()+3*24*60*60*1000).toISOString()
         });
-      } else if (status === 'RETURNED') {
-        // mug returned → move to Past Orders
-        console.log('Order has returned')
-        onMugReturned();
-      } else {
+      }else if(status === 'RETURNED'){
+        console.log('Order has returned');
+        onMugReturned(orderId);
+      }else{
         console.log('[socket] orderUpdate with unhandled status:', status);
       }
-
     });
 
-    socket.on('connect_error', (err) => {
+    socket.on('connect_error', err => {
       console.warn('[socket] connect_error', err.message);
     });
 
-  } catch (e) {
+  }catch(e){
     console.warn('[socket] setup error', e);
   }
 }
 
-/* ===== helpers ===== */
+/* ========== helpers ========== */
 function fmtDate(s){
   const d = new Date(s);
-  return d.toLocaleString([], {month:'short', day:'numeric', hour:'numeric', minute:'2-digit'});
+  return d.toLocaleString([], {
+    month:'short', day:'numeric',
+    hour:'numeric', minute:'2-digit'
+  });
 }
 function daysOverdue(orderedISO, days=3){
   const due = new Date(orderedISO);
   due.setDate(due.getDate()+days);
   const now = new Date();
   if(now <= due) return null;
-  return Math.ceil((now - due)/(1000*60*60*24));
+  return Math.ceil((now-due)/(1000*60*60*24)) * -1; // negative not used
 }
 
+/* café list */
 function cafeRow(c){
   return `
     <div class="card item">
@@ -421,39 +369,64 @@ function cafeRow(c){
     </div>`;
 }
 function renderOrderList(q=''){
-  const needle = q.trim().toLowerCase();
-  const filtered = cafes.filter(c => (c.name + ' ' + c.area).toLowerCase().includes(needle));
+  const needle   = q.trim().toLowerCase();
+  const filtered = cafes.filter(c =>
+    (c.name + ' ' + c.area).toLowerCase().includes(needle)
+  );
   byId('order-list').innerHTML =
     filtered.map(cafeRow).join('') || `<div class="meta">No results.</div>`;
   byId('order-count').textContent =
     `${filtered.length} café${filtered.length!==1?'s':''}`;
 }
 
+/* past orders */
 function historyRow(o){
   const overdueDays = !o.returned ? daysOverdue(o.ordered,3) : null;
-  const status = overdueDays
-    ? `<span class="pill overdue-pill">Overdue</span>`
-    : `<span class="pill">Returned</span>`;
-  const extra = overdueDays
-    ? ` • <span class="overdue-text">${overdueDays} day${overdueDays>1?'s':''} overdue</span>`
-    : ` • Returned: ${fmtDate(o.returned)}`;
+  let pillHTML = '';
+  let extra    = '';
+
+  if(o.status === 'RETURNED'){
+    pillHTML = `<span class="pill">Returned</span>`;
+    extra    = ` • Returned: ${fmtDate(o.returned)}`;
+  }else if(o.status === 'READY_PICKUP'){
+    pillHTML = `<span class="pill">Ready for pickup</span>`;
+    if(overdueDays && overdueDays < 0){
+      const d = Math.abs(overdueDays);
+      extra = ` • <span class="overdue-text">${d} day${d>1?'s':''} overdue</span>`;
+    }
+  }else{
+    // Seed “overdue” legacy case or generic
+    if(overdueDays && overdueDays < 0){
+      const d = Math.abs(overdueDays);
+      pillHTML = `<span class="pill overdue-pill">Overdue</span>`;
+      extra    = ` • <span class="overdue-text">${d} day${d>1?'s':''} overdue</span>`;
+    }else{
+      pillHTML = `<span class="pill">In progress</span>`;
+    }
+  }
+
   return `
     <div class="card item">
       <img class="thumb" src="${MUG_SRC}" alt="">
       <div class="item-body">
         <div class="h2">${o.item} — ${o.cafe}</div>
-        <div class="meta">Ordered: ${fmtDate(o.ordered)}${extra}</div>
+        <div class="meta">
+          Ordered: ${fmtDate(o.ordered)}${extra}
+        </div>
       </div>
-      ${status}
+      ${pillHTML}
     </div>`;
 }
 function renderPast(){
   byId('past-list').innerHTML = orders.map(historyRow).join('');
 }
 
+/* status banner */
 function renderStatus(){
   const el = byId('status-text');
-  const s = state.activeMug;
+  const key = state.lastActiveOrderId;
+  const s   = key ? state.activeMugs[key] : null;
+
   if(!s){
     el.className = 'status-none';
     el.textContent = 'No active mug. Place an order to get started.';
@@ -464,60 +437,97 @@ function renderStatus(){
   });
   el.className = 'status-good';
   el.innerHTML =
-    `Checked out <b>${s.item}</b> at <b>${s.cafe}</b> • Mug ID <b>${s.id}</b><br>Due by <b>${dueStr}</b>`;
+    `Checked out <b>${s.item}</b> at <b>${s.cafe}</b> • Mug ID <b>${s.mugId}</b><br>Due by <b>${dueStr}</b>`;
 }
 
-/* ===== hooks used by socket.io + tests ===== */
-function onMugAssigned({ id, cafe, item, orderedISO, dueISO }){
-  state.activeMug = { id, cafe, item, orderedISO, dueISO };
-  renderStatus();
-}
-
-function recordReturn({ cafe, item, orderedISO }){
-  orders = [
-    {
-      id: Math.floor(Math.random()*100000),
-      cafe,
-      item,
-      ordered: orderedISO,
-      returned: new Date().toISOString()
-    },
-    ...orders
-  ];
+/* ========= core hooks used by socket + demo ========= */
+function upsertOrder(order){
+  const idx = orders.findIndex(o => o.orderId === order.orderId);
+  if(idx === -1){
+    orders = [order, ...orders];     // newest on top
+  }else{
+    orders[idx] = order;
+  }
   renderPast();
 }
 
-function onMugReturned(){
-  if(!state.activeMug) return;
-  const s = state.activeMug;
-  recordReturn({ cafe: s.cafe, item: s.item, orderedISO: s.orderedISO });
-  state.activeMug = null;
+function onMugAssigned({ orderId, id, cafe, item, orderedISO, dueISO }){
+  const key = String(orderId || 'default');
+  const order = {
+    orderId: key,
+    mugId:   id,
+    cafe,
+    item,
+    ordered: orderedISO,
+    dueISO,
+    returned: null,
+    status:  'READY_PICKUP'
+  };
+  state.activeMugs[key]   = order;
+  state.lastActiveOrderId = key;
+  upsertOrder(order);
   renderStatus();
 }
 
-/* Manual testing helpers (keep for debugging) */
+function onMugReturned(orderId){
+  const key = String(orderId || state.lastActiveOrderId || 'default');
+  const mug = state.activeMugs[key];
+
+  if(!mug){
+    console.log('[onMugReturned] mug not found in active map:', key);
+    return;
+  }
+
+  const updated = {
+    ...mug,
+    status:  'RETURNED',
+    returned:new Date().toISOString()
+  };
+
+  delete state.activeMugs[key];
+  if(state.lastActiveOrderId === key){
+    state.lastActiveOrderId = null;
+  }
+
+  upsertOrder(updated);
+  renderStatus();
+  console.log('[onMugReturned] Returned mug:', key);
+}
+
+/* ===== manual console helpers ===== */
 window.demoAssign = function(){
   const pick = cafes[0];
-  const now = new Date();
-  const due = new Date(now);
-  due.setDate(due.getDate()+3);
+  const now  = new Date();
+  const due  = new Date(now.getTime() + 3*24*60*60*1000);
+
+  const orderId = 'ORDER-' + Math.floor(Math.random()*9000 + 1000);
+  const mugId   = 'MUG-'   + Math.floor(Math.random()*9000 + 1000);
+
   onMugAssigned({
-    id: 'MUG-'+Math.floor(Math.random()*9000+1000),
-    cafe: pick.name,
-    item: 'Latte',
+    orderId,
+    id:         mugId,
+    cafe:       pick.name,
+    item:       'Latte',
     orderedISO: now.toISOString(),
-    dueISO: due.toISOString()
+    dueISO:     due.toISOString()
   });
-};
-window.demoReturn = function(){
-  onMugReturned();
+
+  console.log('[demoAssign] Assigned:', orderId, mugId);
 };
 
-/* ===== SPA Navigation ===== */
+window.demoReturn = function(orderId){
+  if(orderId){
+    onMugReturned(orderId);
+    return;
+  }
+  onMugReturned(); // uses lastActiveOrderId
+};
+
+/* ===== SPA navigation ===== */
 const views = ['login','dashboard','order','map','past'];
 
 function setActiveTab(view){
-  $$('.nav a').forEach(a => {
+  $$('.nav a').forEach(a=>{
     a.classList.toggle('active', a.dataset.nav === view);
   });
 }
@@ -526,9 +536,10 @@ function show(view){
   if(view !== 'login' && !state.user){
     view = 'login';
   }
-  views.forEach(v => {
+  views.forEach(v=>{
     byId('view-'+v).classList.toggle('hidden', v !== view);
   });
+
   byId('nav').style.display = (view === 'login') ? 'none' : 'flex';
 
   if(view === 'order'){
@@ -545,29 +556,27 @@ function show(view){
   window.scrollTo(0,0);
 }
 
-/* Events */
-byId('login-btn').addEventListener('click', () => {
+/* events */
+byId('login-btn').addEventListener('click', ()=>{
   const val = (byId('login-username').value || '').trim().toLowerCase();
   const err = byId('login-err');
   if(val === 'demo'){
     state.user = 'Demo';
-    err.style.display = 'none';
+    err.style.display='none';
     byId('welcome').textContent = `Welcome Back, ${state.user}!`;
     show('dashboard');
     renderStatus();
-  } else {
-    err.style.display = 'block';
+  }else{
+    err.style.display='block';
   }
 });
 
-$$('[data-nav]').forEach(el => {
-  el.addEventListener('click', () => show(el.dataset.nav));
+$$('[data-nav]').forEach(el=>{
+  el.addEventListener('click', ()=>show(el.dataset.nav));
 });
 
-byId('order-q')?.addEventListener('input', e => {
-  renderOrderList(e.target.value);
-});
-byId('map-q')?.addEventListener('input', e => {
+byId('order-q')?.addEventListener('input', e=>renderOrderList(e.target.value));
+byId('map-q')?.addEventListener('input', e=>{
   const needle = e.target.value.toLowerCase();
   const filtered = cafes.filter(
     c => (c.name + ' ' + c.area).toLowerCase().includes(needle)
@@ -575,8 +584,8 @@ byId('map-q')?.addEventListener('input', e => {
   byId('map-list').innerHTML =
     filtered.map(cafeRow).join('') || `<div class="meta">No results.</div>`;
 });
-$$('.pin').forEach(pin => {
-  pin.addEventListener('click', () => {
+$$('.pin').forEach(pin=>{
+  pin.addEventListener('click', ()=>{
     const c = cafes.find(x => x.id === pin.dataset.id);
     if(!c) return;
     byId('map-q').value = c.name;
@@ -584,10 +593,10 @@ $$('.pin').forEach(pin => {
   });
 });
 
-/* ===== Start app ===== */
-setupSocket();      // connect to Node.js server
-show('login');      // initial view
-renderPast();       // render seeded history
+/* start app */
+setupSocket();
+show('login');
+renderPast();
 </script>
 </body>
 </html>
