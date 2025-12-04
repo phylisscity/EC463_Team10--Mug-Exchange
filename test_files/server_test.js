@@ -1,7 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import { query, insertOrder, getUserName, updateOrderMugID, updateMugStatusAvailable, updateOrderMugID, updateMugStatusInUse, getOrderByMugID, pool } from './database.js';
+import { query, insertOrder, getUserName, updateOrderMugID, updateMugStatusAvailable, updateMugStatusInUse, getOrderByMugID, pool } from './database_test.js';
 
 const app = express();
 const IP_ADDRESS = "172.20.10.13";
@@ -101,13 +101,18 @@ app.post('/return', (req, res) => {
     io.emit("orderUpdate", frontend_payload);
     
    
-    updateMugStatusAvailable(return_payload.mugID);
+    updateMugStatusAvailable(return_payload.mug_id);
 
 });
 
 app.get('/', (req, res) => {
     res.send("Mug Exchange server!");
 });
+
+//Authentication
+app.get('/auth', (req, res) => {
+    //
+})
 
 server.listen(PORT, IP_ADDRESS, () => {
     console.log(`Test Server running at http://${IP_ADDRESS}:${PORT}`);

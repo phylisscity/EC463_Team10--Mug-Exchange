@@ -72,7 +72,7 @@ const updateMugStatusAvailable = async (mugID) => {
     console.log("Updated mugID", mugID, "status to available");
 }
 
-export { query, insertOrder, getUserName, updateOrderMugID, updateMugStatusAvailable, updateOrderMugID, updateMugStatusInUse, getOrderByMugID, pool };
+export { query, insertOrder, getUserName, updateMugStatusAvailable, updateOrderMugID, updateMugStatusInUse, getOrderByMugID };
 
 
 

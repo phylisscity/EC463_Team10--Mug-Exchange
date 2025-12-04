@@ -1,6 +1,6 @@
 import requests
 
-SERVER_IP_ADDRESS = "localhost"
+SERVER_IP_ADDRESS = "172.20.10.13"
 url = f'http://{SERVER_IP_ADDRESS}:3000'
 
 def send_mock_order():
@@ -17,8 +17,8 @@ def send_mock_order():
 
 def send_pickup():
     response = requests.post(f'{url}/pickup', json={
-        "mugID": "4545",
-        "username": "Amado"
+        "mug_id": "4545",
+        "username": "Phyo H"
     })
 
     print("Status Code:", response.status_code)
@@ -26,7 +26,7 @@ def send_pickup():
 
 def send_return():
     response = requests.post(f'{url}/return', json={
-        "mugID": "4545"
+        "mug_id": "4545"
     })
 
     print("Status Code:", response.status_code)

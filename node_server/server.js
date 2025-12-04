@@ -1,7 +1,7 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import { query, insertOrder, getUserName, updateOrderMugID, updateMugStatusAvailable, updateOrderMugID, updateMugStatusInUse, getOrderByMugID, pool } from './database.js';
+import { insertOrder, getUserName, updateOrderMugID, updateMugStatusAvailable, updateOrderMugID, updateMugStatusInUse, getOrderByMugID } from './database.js';
 
 const app = express();
 const IP_ADDRESS = "172.20.10.13";
