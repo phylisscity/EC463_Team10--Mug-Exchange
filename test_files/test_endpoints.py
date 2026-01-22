@@ -1,6 +1,6 @@
 import requests
 
-SERVER_IP_ADDRESS = "172.20.10.13"
+SERVER_IP_ADDRESS = "localhost"
 url = f'http://{SERVER_IP_ADDRESS}:3000'
 
 def send_mock_order():
@@ -10,6 +10,7 @@ def send_mock_order():
         "order_number": 5678, 
         "username": "Phyo H", 
         "MugExchange": "Yes",
+        "Item": "Drink 1",
         "status": "ORDER_SUBMITTED"})
 
     print("Status Code:", response.status_code)

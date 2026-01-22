@@ -1,12 +1,16 @@
 import express from "express";
 import http from "http";
 import { Server } from "socket.io";
-import { query, insertOrder, getUserName, updateOrderMugID, updateMugStatusAvailable, updateMugStatusInUse, getOrderByMugID, pool } from './database_test.js';
+import db from './database_test.js';
+import 'dotenv/config';
+import cors from "cors";
+import crypto from "crypto";
 
 const app = express();
-const IP_ADDRESS = "172.20.10.13";
+const IP_ADDRESS = "localhost";
 const PORT = 3000;
 
+app.use(cors());
 app.use(express.json());
 
 const server = http.createServer(app);
@@ -16,15 +20,33 @@ const io = new Server(server, {
     },
 });
 
+io.use(async (socket, next) => {
+  const token = socket.handshake.auth?.token;
+
+  if (!token) {
+    return next(new Error("No auth token"));
+  }
+
+  const uid = await db.userFromToken(token);
+
+  if (!uid) {
+    return next(new Error("Invalid auth token"));
+  }
+
+  socket.user = uid;
+
+  next();
+});
+
 io.on('connection', (socket) => {
-    console.log("Frontend connected: ", socket.id);
+    console.log("User ", socket.user, " connected");
 
     socket.on('disconnect', () => {
         console.log('Frontend disconnected: ', socket.id);
     });
 });
 
-app.post('/api/grubhub/webhook', (req, res) => {
+app.post('/api/grubhub/webhook', async (req, res) => {
     const order = req.body;
 
     console.log("Webhook received", order);
@@ -36,31 +58,34 @@ app.post('/api/grubhub/webhook', (req, res) => {
     const merchant_id = order.merchant_id;
     const status = order.status;
     const username = order.username;
+    const item = order.Item;
 
     const frontend_payload = {
-        mugId: order_number,
+        orderId: order_number,
+        mugId: mug_id,
         merchant_name: merchant_id,
-        status: status
+        status: status,
+        Item: item
     };
 
     io.emit("orderUpdate", frontend_payload);
     
     //Add new row to orders, mugID will be null until pickup
-    insertOrder(order_number, UUID, merchant_id, username); 
+    await db.insertOrder(order_number, UUID, merchant_id, username); 
     
     console.log("Sent payload to websocket");
     }
-
+    
     res.status(200).json({message: "Webhook received"})
 });
 
-app.post('/pickup', (req, res) => {
+app.post('/pickup', async (req, res) => {
     console.log("Pickup endpoint hit: ", req.body);
     res.status(200).json({message: "Pickup RFID received"});
 
     const pickup_payload = req.body;
 
-    const order = getUserName(pickup_payload.username);
+    const order = await db.getOrderInfo(pickup_payload.username);
 
     //Emit to frontend
     const frontend_payload = {
@@ -73,22 +98,20 @@ app.post('/pickup', (req, res) => {
 
     io.emit("orderUpdate", frontend_payload);
     
-    
-    updateOrderMugID(pickup_payload.username, pickup_payload.mug_id);
-
-    updateMugStatusInUse(pickup_payload.mug_id);
+    await db.updateOrderMugID(pickup_payload.username, pickup_payload.mug_id);
+    await db.updateMugStatusInUse(pickup_payload.mug_id);
 
     //Add row to events table for pickup event LATER
 });
 
-app.post('/return', (req, res) => {
+app.post('/return', async (req, res) => {
     console.log("Return bin endpoint hit: ", req.body);
     res.status(200).json({message: "Return RFID received"});
 
     //Send query to database, use unique mugID to build payload out of order info
     const return_payload = req.body;
 
-    const order = getOrderByMugID(return_payload.mug_id);
+    const order = await db.getOrderByMugID(return_payload.mug_id);
 
     //Emit to frontend
     const frontend_payload = {
@@ -100,8 +123,7 @@ app.post('/return', (req, res) => {
     };
     io.emit("orderUpdate", frontend_payload);
     
-   
-    updateMugStatusAvailable(return_payload.mug_id);
+   await db.updateMugStatusAvailable(return_payload.mug_id);
 
 });
 
@@ -110,10 +132,35 @@ app.get('/', (req, res) => {
 });
 
 //Authentication
-app.get('/auth', (req, res) => {
-    //
-})
+app.post('/signup', async (req, res) => {
+    const { user, pass, phone } = req.body;
+    await db.addUser(user, pass, phone);
+
+    res.status(200).json({ success: true, message: "User registered" });
+});
+
+app.post('/login', async (req, res) => {
+    console.log("Login endpoint hit");
+    const {username, password} = req.body;
+    const uid = await db.findUser(username, password);
+    console.log("UID IS: ", uid);
+
+    if (!uid) {
+    return res.status(401).json({ error: "Invalid credentials" });
+    }
+
+    const token = crypto.randomUUID();
+    await db.addUserToken(uid, token);
+    res.json({ token });
+});
+
 
 server.listen(PORT, IP_ADDRESS, () => {
     console.log(`Test Server running at http://${IP_ADDRESS}:${PORT}`);
 });
+
+/*
+TO DO:
+- Change primary key of users table to not be random UUID instead of auto-increment
+- Implement deleting users in frontend and database
+*/
