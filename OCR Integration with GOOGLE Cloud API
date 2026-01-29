@@ -1,0 +1,22 @@
+GOOGLE CLOUD OCR SETUP AND INTEGRATION
+
+
+INSTALLATION OF API
+brew install --cask google-cloud-sdk   
+
+POST COMMAND
+POST https://vision.googleapis.com/v1/images:annotate
+
+COMMAND for enabling vision cloud
+gcloud services enable vision.googleapis.com --project project-5b9d9537-1e48-4b04-b26                             
+
+COMMAND for AUTH login
+gcloud auth application-default login
+
+COMMAND for AUTH SETUP 
+gcloud auth application-default set-quota-project project-5b9d9537-1e48-4b04-b26
+
+COMMAND for gcloud vision upload
+gcloud ml vision detect-text FILENAME --project project-5b9d9537-1e48-4b04-b26
+
+
