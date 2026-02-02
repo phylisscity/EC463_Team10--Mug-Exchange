@@ -87,10 +87,10 @@ const updateMugStatusAvailable = async (mugID) => {
 }
 
 //Add a new user into database
-const addUser = async (user, pass, phone) => {
+const addUser = async (uuid, user, pass, phone) => {
     const sqlUpdate = await dbQuery(
-        "INSERT INTO users (name, phone, password) VALUES (?, ?, ?)",
-        [user, phone, pass]
+        "INSERT INTO users (id, name, phone, password) VALUES (?, ?, ?, ?)",
+        [uuid, user, phone, pass]
     );
     console.log("Added user", user);
 }
@@ -122,6 +122,23 @@ const userFromToken = async (token) => {
     return rows[0];
 }
 
+//Remove user token
+const removeUserToken = async (uid) => {
+    const sqlUpdate = await dbQuery(
+        "UPDATE users SET token = NULL WHERE id = ?",
+        [uid]
+    );
+    console.log("Removed token for user: ", uid);
+}
+
+const getUserOrders = async (uid) => {
+    const rows = await dbQuery(
+        "SELECT * FROM orders WHERE user_id = ?",
+        [uid]
+    );
+    return rows;
+}
+
 export default { 
     query, 
     insertOrder, 
@@ -133,6 +150,8 @@ export default {
     addUser, 
     findUser,
     addUserToken,
-    userFromToken, 
+    userFromToken,
+    removeUserToken,
+    getUserOrders,
     pool 
 };
